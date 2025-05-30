@@ -67,11 +67,14 @@ passport.deserializeUser(function (id, done){
 
 //     }
 // ));
+// Начиная с версии Mongoose 7 и MongoDB Node.js драйвера 5.0, 
+// методы модели (включая findOne) больше не поддерживают передачу callback-функций. 
+// Теперь они всегда возвращают промис.
 //********************************замена************************************************** */
 passport.use(new GoogleStrategy({
     clientID: "1059565581219-qrlt8clvqv2dua7inn40rte2o4h8g4c7.apps.googleusercontent.com",
     clientSecret: "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",
-    callbackURL: "http://truruki.ru:40444/auth/google/callback"
+    callbackURL: "http://truruki.ru/auth/google/callback"
 },
 async function(accessToken, refreshToken, profile, done) {
     try {
