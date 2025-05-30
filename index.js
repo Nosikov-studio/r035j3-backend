@@ -98,6 +98,5 @@ app.get('/login',
         }
     });
 
-    app.listen(40444, function (){
-        console.log("http://localhost");
-    });
+    app.listen(40444, () => {
+        console.log('Сервер запущен на порту 40444')});
