@@ -1,7 +1,14 @@
 const express = require("express");
 const app = express();
 app.use(express.json());
-
+/////////////////////////////////////////////
+const cors = require('cors');
+// const corsOptions = {
+//   origin: 'https://truruky.ru',  // домен фронтенда
+//   credentials: true,             // разрешаем куки
+// };
+// app.use(cors(corsOptions));
+app.use(cors());
 ///////////////MONGODB///////////////////////
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/test', {useNewUrlParser: true, useUnifiedTopology: true}); 
