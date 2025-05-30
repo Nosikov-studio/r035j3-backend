@@ -28,15 +28,24 @@ var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 passport.serializeUser(function (user, done){
     done(null, user.id);
 });
+//*********************устаревший синтаксис************************************************** */
+// passport.deserializeUser(function (id, done){
+//     User.findById(id, function (err, user) {
+//         err
+//           ? done(err)
+//           : done(null, user);
+//     });
+// });
 
-passport.deserializeUser(function (id, done){
-    User.findById(id, function (err, user) {
-        err
-          ? done(err)
-          : done(null, user);
-    });
+//*****************замена************************************************************ */
+passport.deserializeUser(async (id, done) => {
+  try {
+    const user = await User.findById(id);
+    done(null, user);
+  } catch (err) {
+    done(err, null);
+  }
 });
-
 // passport.use(new GoogleStrategy({
 //     clientID: "1059565581219-qrlt8clvqv2dua7inn40rte2o4h8g4c7.apps.googleusercontent.com", //???
 //     clientSecret: "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", //???
