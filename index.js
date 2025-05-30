@@ -37,36 +37,58 @@ passport.deserializeUser(function (id, done){
     });
 });
 
+// passport.use(new GoogleStrategy({
+//     clientID: "1059565581219-qrlt8clvqv2dua7inn40rte2o4h8g4c7.apps.googleusercontent.com", //???
+//     clientSecret: "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", //???
+//     callbackURL: "http://truruki.ru/auth/google/callback" //???
+// },
+//     function (accessToken, refreshToken, profile, done) {
+//         // User.findOne({
+//         //     'googleId': profile.id
+//         // }, function(err, user){
+//         //     if (err) {
+//         //         return done(err);
+//         //     }
+
+//         //     if (!user) {
+//         //         user = new User ({
+//         //             googleId: profile.id,
+//         //             name: profile._json.name,
+//         //         });
+//         //         user.save(function (err) {
+//         //             if (err) console.log(err);
+//         //             return done(err, user);
+//         //         });
+//         //     } else {
+//         //         return done(err, user);
+//         //     }
+//         // });
+
+
+//     }
+// ));
+//********************************замена************************************************** */
 passport.use(new GoogleStrategy({
-    clientID: "1059565581219-qrlt8clvqv2dua7inn40rte2o4h8g4c7.apps.googleusercontent.com", //???
-    clientSecret: "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", //???
-    callbackURL: "http://truruki.ru/auth/google/callback" //???
+    clientID: "1059565581219-qrlt8clvqv2dua7inn40rte2o4h8g4c7.apps.googleusercontent.com",
+    clientSecret: "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",
+    callbackURL: "http://truruki.ru:40444/auth/google/callback"
 },
-    function (accessToken, refreshToken, profile, done) {
-        User.findOne({
-            'googleId': profile.id
-        }, function(err, user){
-            if (err) {
-                return done(err);
-            }
-
-            if (!user) {
-                user = new User ({
-                    googleId: profile.id,
-                    name: profile._json.name,
-                });
-                user.save(function (err) {
-                    if (err) console.log(err);
-                    return done(err, user);
-                });
-            } else {
-                return done(err, user);
-            }
-        });
-
+async function(accessToken, refreshToken, profile, done) {
+    try {
+        let user = await User.findOne({ googleId: profile.id });
+        if (!user) {
+            user = new User({
+                googleId: profile.id,
+                name: profile._json.name,
+            });
+            await user.save();
+        }
+        return done(null, user);
+    } catch (err) {
+        return done(err);
     }
-));
-
+}));
+//***************************************************************************** */
 const expressSession = require('express-session')({
     secret: 'secret',
     resave: false,
