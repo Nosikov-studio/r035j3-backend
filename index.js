@@ -40,7 +40,7 @@ passport.deserializeUser(function (id, done){
 passport.use(new GoogleStrategy({
     clientID: "1059565581219-qrlt8clvqv2dua7inn40rte2o4h8g4c7.apps.googleusercontent.com", //???
     clientSecret: "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", //???
-    callbackURL: "http://localhost/auth/google/callback" //???
+    callbackURL: "http://truruki.ru/auth/google/callback" //???
 },
     function (accessToken, refreshToken, profile, done) {
         User.findOne({
