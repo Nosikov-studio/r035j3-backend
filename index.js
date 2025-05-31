@@ -22,7 +22,7 @@ const User = mongoose.model('User', userSchema);
 
 ///////////////Passport/////////////////////////
 var passport = require('passport');
-
+// в passport для каждой соцсети существует своя стротегия, для каждой нужно устанавливать свой модуль
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 passport.serializeUser(function (user, done){
@@ -46,6 +46,7 @@ passport.deserializeUser(async (id, done) => {
     done(err, null);
   }
 });
+//***************************устаревший************************************************************* */
 // passport.use(new GoogleStrategy({
 //     clientID: "1059565581219-qrlt8clvqv2dua7inn40rte2o4h8g4c7.apps.googleusercontent.com", //???
 //     clientSecret: "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", //???
